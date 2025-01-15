@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface GameState {
     userName: string,
+    userId: string,
     characterName: string,
     expertName: string,
     gameName: string,
@@ -21,7 +22,7 @@ interface GameContextType {
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [gameState, setGameState] = useState<GameState>({userName:'', characterName:'', expertName:'', gameName:'', problemType:'', problemLevel:''});
+  const [gameState, setGameState] = useState<GameState>({userName:'', userId:'', characterName:'', expertName:'', gameName:'', problemType:'', problemLevel:''});
 
   return (
     <GameContext.Provider value={{ gameState, setGameState }}>

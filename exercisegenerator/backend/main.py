@@ -48,11 +48,11 @@ class Problem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    solution = db.Column(db.Text, nullable=False)
+    solution = db.Column(db.Text, nullable=True)
     user_solution = db.Column(db.Text, nullable=True)
     score = db.Column(db.Text, nullable=True)
-    problem_type = db.Column(db.String(100), nullable=True)
-    problem_level = db.Column(db.String(100), nullable=True)
+    problem_type = db.Column(db.String(100), nullable=False)
+    problem_level = db.Column(db.String(100), nullable=False)
 
 
 # Create tables
@@ -146,8 +146,22 @@ def problem():
             all_types = ['multiple choice', 'True/False', 'Fill in the blank', 'essay', 'coding', 'short answer']
             types = random.choice(all_types)
 
+        # Generate question with AI
         result = ai_question(character_name, expert_name, game_name, level, types)
 
+        # Add the problem to database, associate with the game id
+        game = Game.query.filter_by(user_id=data['userId']).order_by(Game.created_at.desc()).first() # get the current game
+        
+        new_problem = Problem(
+            game_id=game.id,
+            description=result['question'],
+            problem_type=types,
+            problem_level=level
+        )
+
+        db.session.add(new_problem)
+        db.session.commit()
+    
         return jsonify({'question': result['question'], 'history': result['history']
         }), 201
     except Exception as e:
@@ -166,7 +180,7 @@ def answer():
         return jsonify({'error': str(e)}), 500
     
 
-@app.route('/api/predict', methods=['POST'])
+@app.route('/api/predict/<userId>/', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
@@ -179,10 +193,11 @@ def predict():
 
         for items in history_content:
             history.append(items['author'] + " : " + items['content'])
-        print(history)
 
         if 'correct answer' in human_answer:
             ans = ai_answer(question, history)
+            ## ADD answer to the problem
+
             return jsonify(prediction=ans['answer']), 201 
         else:
             eval = ai_evaluation(question,  history, human_answer)
