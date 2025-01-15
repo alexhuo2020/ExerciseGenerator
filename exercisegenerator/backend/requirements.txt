@@ -1,0 +1,7 @@
+langchain
+langchain-openai
+langchain-google-genai
+langchain-grok
+flask
+flask-cors
+flask_sqlalchemy
