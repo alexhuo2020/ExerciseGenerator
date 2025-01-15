@@ -23,6 +23,8 @@ const IntroPage: React.FC<IntroPageProps> = () => {
   const [selectedLevelIndex, setSelectedLevelIndex]  = useState<number | null>(null);
   const LevelOptions = ["Easy", "Intermediate", "Difficult", "Super Difficult", "Random"];
 
+  const [gameId, setGameId] = useState('');
+
 
   const onStartGame = async () => {
     try {
@@ -41,6 +43,7 @@ const IntroPage: React.FC<IntroPageProps> = () => {
           problemLevel,
         }),
       });
+
   
       // Check if the response is ok (status in the range 200-299)
       if (!response.ok) {

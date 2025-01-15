@@ -36,6 +36,8 @@ const GamePage: React.FC<GamePageProps> = ({ page }) => {
   
   // Destructure page state
   const { messages, problem, problemHeight, chatHeight, inputHeight } = pageState;
+
+  const [problemId, setProblemId] = useState<string>('');
   
   // Resize state
   const [isDraggingProblem, setIsDraggingProblem] = useState<boolean>(false);
@@ -75,6 +77,7 @@ const GamePage: React.FC<GamePageProps> = ({ page }) => {
           const result = await response.json();
           
           updatePageState(page, { problem: result.question });
+          setProblemId(result.problemId);
         } catch (error) {
           console.error("Error fetching data:", error);
           setError("Failed to load problem.");
@@ -97,7 +100,7 @@ const GamePage: React.FC<GamePageProps> = ({ page }) => {
       const response = await fetch('http://localhost:5000/api/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ problem, prompt, history: messages }),
+        body: JSON.stringify({ problemId, problem, prompt, history: messages }),
       });
       
       if (!response.ok) throw new Error('Network response was not ok');

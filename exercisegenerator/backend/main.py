@@ -79,7 +79,7 @@ def start_game():
             expert_name=data['expertName'],
             game_name=data['gameName'],
             problem_type=data['problemType'],
-            problemLevel=data['problemLevel']
+            problem_level=data['problemLevel']
         )
 
         # Save to database
@@ -132,18 +132,18 @@ def get_all_games():
 @app.route('/api/problem', methods = [ 'POST'])
 def problem():
     try:
-        data =request.json
+        data = request.json
         character_name = data['characterName']
         expert_name = data['expertName']
         game_name = data['gameName']
         level = data['problemLevel']
         types = data['problemType']
-        if level == 'random':
-            levels = ['easy', 'difficult','intermediate']
+        if level == 'Random':
+            levels =["Easy", "Intermediate", "Difficult", "Super Difficult", "Random"]
             level = random.choice(levels) 
         
-        if types == 'random':
-            all_types = ['multiple choice', 'True/False', 'Fill in the blank', 'essay', 'coding', 'short answer']
+        if types == 'Random':
+            all_types = ["Multiple Choice", "Coding", "T/F", "Eassy",  "Written Response", "Random"]
             types = random.choice(all_types)
 
         # Generate question with AI
@@ -162,7 +162,7 @@ def problem():
         db.session.add(new_problem)
         db.session.commit()
     
-        return jsonify({'question': result['question'], 'history': result['history']
+        return jsonify({'problemId':new_problem.id,'question': result['question'], 'history': result['history']
         }), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -180,29 +180,37 @@ def answer():
         return jsonify({'error': str(e)}), 500
     
 
-@app.route('/api/predict/<userId>/', methods=['POST'])
+@app.route('/api/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
-        question = data['problem']
+        problem_id = data['problemId']
+        problem = Problem.query.filter_by(id=problem_id).first()
+
+
         
         human_answer = data['prompt']
         history_content = data['history']
         history = []
-        history.append(f'AI: question:\n {question}')
+        history.append(f'AI: question:\n {problem}')
 
         for items in history_content:
             history.append(items['author'] + " : " + items['content'])
 
         if 'correct answer' in human_answer:
-            ans = ai_answer(question, history)
+            ans = ai_answer(problem, history)
             ## ADD answer to the problem
+            problem.solution = ans['answer']
+            db.session.commit()
 
             return jsonify(prediction=ans['answer']), 201 
         else:
-            eval = ai_evaluation(question,  history, human_answer)
+            eval = ai_evaluation(problem,  history, human_answer)
             score = eval['score']
             history = eval['history']
+            problem.user_solution = human_answer
+            problem.score = score 
+            db.session.commit()
             return jsonify(prediction=eval['evaluation'], score=score), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
