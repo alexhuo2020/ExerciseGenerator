@@ -3,3 +3,4 @@ instance
 .env
 testapi.sh
 tmp*
+cache

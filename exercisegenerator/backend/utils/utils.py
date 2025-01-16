@@ -1,6 +1,17 @@
 import re 
 import os 
-folder = '../cache'
+folder = 'cache/'
+
+def save_code(code, test_code, language):
+    language_extensions = {'python': '.py', 'cpp': '.cpp', 'cshapr': '.cs', 'javascript': '.js', 'java': '.java', 'c': '.c','':'.py'}
+    ext = language_extensions[language]
+    with open(folder + 'ans' + ext, 'w') as f:
+        f.write(code)
+        f.write("\n")
+        f.write(test_code)
+    return folder + 'ans' + ext, language
+
+
 
 def get_code_from_markdown(text):
     pattern = r'^```(\w+)?\s*\n(.*?)(?=^```)```'

@@ -81,7 +81,8 @@ def get_answer_chains(problem_type):
 
 
 
-def get_answer_chain_with_tool():
+def get_answer_chain_with_tool(problem_type):
+    assert problem_type=='coding'
 
     from pydantic.v1 import BaseModel, Field
     from langchain.utils.openai_functions import convert_pydantic_to_openai_function
