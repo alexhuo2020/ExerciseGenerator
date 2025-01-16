@@ -19,7 +19,7 @@ const IntroPage: React.FC<IntroPageProps> = () => {
   const navigate = useNavigate();
   const { setGameState } = useGameContext();
   const [selectedProblemTypeIndex, setSelectedProblemTypeIndex] = useState<number | null>(null);
-  const ProblemTypeOptions = [ "Multiple Choice", "Coding", "T/F", "Eassy",  "Written Response", "Random"];
+  const ProblemTypeOptions = [ "Multiple Choice", "coding", "T/F", "Eassy",  "Written Response", "Random"];
   const [selectedLevelIndex, setSelectedLevelIndex]  = useState<number | null>(null);
   const LevelOptions = ["Easy", "Intermediate", "Difficult", "Super Difficult", "Random"];
 

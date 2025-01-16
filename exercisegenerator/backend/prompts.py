@@ -13,7 +13,7 @@ class QuesPrompts():
         elif self.type == 'coding':
             self.prompt = PromptTemplate(
                 input_variables=["role", "level", "topic", "type", "history"],
-                template= """You are a professional {expert_name} and you know how to solve problems effectively and efficiently. Please provide one {level} {game_name} {type} problem each time randomly and ask the students who is a {character_name} to provide the answer. Provide code for the function name and variables. Do not provide solution until you are asked to provide the solution.  Use `\`\`\`language\n` for coding blocks if it exists with language being the programming language. Start the response with Problem directly.\n 
+                template= """You are a professional {expert_name} and you know how to solve problems effectively and efficiently. Please provide one {level} {game_name} {type} problem each time randomly and ask the students who is a {character_name} to provide the code. Provide code for the function name and variables. Do not provide solution until you are asked to provide the solution.  Use `\`\`\`language\n` for coding blocks if it exists with language being the programming language. Start the response with Problem directly.\n 
                 """
                 )
         else:

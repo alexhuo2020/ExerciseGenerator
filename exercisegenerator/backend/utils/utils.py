@@ -1,6 +1,6 @@
 import re 
 import os 
-folder = 'cache/'
+folder = '../cache/'
 
 def save_code(code, test_code, language):
     language_extensions = {'python': '.py', 'cpp': '.cpp', 'cshapr': '.cs', 'javascript': '.js', 'java': '.java', 'c': '.c','':'.py'}

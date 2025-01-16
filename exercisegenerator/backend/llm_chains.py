@@ -8,7 +8,7 @@ load_dotenv()
 def get_llm():
     if os.getenv('LLM_SOURCE') == 'openai':
         from langchain_openai import ChatOpenAI
-        llm = ChatOpenAI(model=os.getenv('LLM_NAME'))
+        llm = ChatOpenAI(model=os.getenv('LLM_NAME'), temperature=1)
     elif os.getenv('LLM_SOURCE') == 'grok':
         from langchain_groq import ChatGroq
         llm = ChatGroq(groq_api_key = os.getenv('GROQ_API_KEY'), model = 'llama3-70b-8192', temperature=1)
@@ -45,6 +45,7 @@ def get_question_chains(problem_type):
     """
     llm = get_llm()
     question_prompt = QuesPrompts(problem_type).prompt
+    print(question_prompt)
     question_chain = LLMChain(llm=llm, prompt=question_prompt)
     return question_chain
 

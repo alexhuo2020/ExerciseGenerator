@@ -6,7 +6,7 @@ from flask_cors import CORS
 import numpy as np 
 import random
 
-from llm_agent import ai_answer, ai_question, ai_evaluation, ai_answer_code
+from llm_agent import ai_answer, ai_question, ai_evaluation, ai_answer_code, ai_evaluation_code
 
 
 app = Flask(__name__)
@@ -148,6 +148,11 @@ def problem():
 
         # Generate question with AI
         result = ai_question(character_name, expert_name, game_name, level, types)
+        if types != 'coding':
+            ans = ai_answer(result['question'], history=[''])
+        else:
+            ans = ai_answer_code(result['question'], history=[''])
+            
 
         # Add the problem to database, associate with the game id
         game = Game.query.filter_by(user_id=data['userId']).order_by(Game.created_at.desc()).first() # get the current game
@@ -155,14 +160,16 @@ def problem():
         new_problem = Problem(
             game_id=game.id,
             description=result['question'],
+            solution=ans['answer'],
             problem_type=types,
             problem_level=level
         )
 
         db.session.add(new_problem)
         db.session.commit()
-    
-        return jsonify({'problemId':new_problem.id,'question': result['question'], 'history': result['history']
+
+        print("succesful")
+        return jsonify({'problemId':new_problem.id,'question': result['question'], 'history': result['history'], 'answer': ans['answer']
         }), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -198,19 +205,28 @@ def predict():
             history.append(items['author'] + " : " + items['content'])
 
         if 'correct answer' in human_answer:
-            ans = ai_answer(problem, history)
-            ## ADD answer to the problem
-            problem.solution = ans['answer']
-            db.session.commit()
+            # ans = ai_answer(problem, history)
+            # ## ADD answer to the problem
+            # problem.solution = ans['answer']
+            # db.session.commit()
 
-            return jsonify(prediction=ans['answer']), 201 
+            return jsonify(prediction=problem.solution), 201 
         else:
-            eval = ai_evaluation(problem,  history, human_answer)
-            score = eval['score']
-            history = eval['history']
-            problem.user_solution = human_answer
-            problem.score = score 
-            db.session.commit()
+            if problem.problem_type != 'coding':
+                eval = ai_evaluation(problem,  history, human_answer)
+                score = eval['score']
+                history = eval['history']
+                problem.user_solution = human_answer
+                problem.score = score 
+                db.session.commit()
+            else:
+                eval = ai_evaluation_code(problem,  history, human_answer)
+                score = eval['score']
+                history = eval['history']
+                problem.user_solution = human_answer
+                problem.score = score 
+                db.session.commit()
+
             return jsonify(prediction=eval['evaluation'], score=score), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500

@@ -3,6 +3,7 @@ import re
 from utils import save_code_from_markdown_to_file, execute_generated_code, save_code, save_code_from_human_input
 
 def ai_question(character_name, expert_name, game_name, level, problem_type=''):
+    print('problemType', problem_type)
     question_chain = get_question_chains(problem_type)
     history = []
     question = question_chain.invoke({"character_name": character_name, "expert_name": expert_name, "game_name": game_name, "type": type, "level":level})['text']
@@ -44,7 +45,7 @@ def ai_evaluation_code(question, history, human_answer, problem_type='', languag
 
 
 
-def ai_answer_code(question, history, human_answer, problem_type, max_trial=2):
+def ai_answer_code(question, history, human_answer='', problem_type='coding', max_trial=2):
     answer_chain = get_answer_chains(problem_type)
     history.append(f"You: {human_answer}")
     code_run_output = ''
@@ -54,7 +55,7 @@ def ai_answer_code(question, history, human_answer, problem_type, max_trial=2):
         ans = answer_chain.invoke({"question": question, "history": "\n".join(history)})['text']
         script, language = save_code_from_markdown_to_file(ans)
         language = language if language!='' else 'python'
-        code_run_output = execute_generated_code(script, language).get('output', '')
+        code_run_output = execute_generated_code(script, language, is_unit_test=True).get('output', '')
         repeat += 1
     history.append(f"AI: {ans}")
     if not ('passed' in code_run_output):
@@ -63,7 +64,7 @@ def ai_answer_code(question, history, human_answer, problem_type, max_trial=2):
     return {'answer': ans, 'history': history, 'status': status}
 
 
-def ai_answer_code_with_tool(question, history, human_answer, problem_type, max_trial=2):
+def ai_answer_code_with_tool(question, history, human_answer='', problem_type='coding', max_trial=2):
     answer_chain = get_answer_chain_with_tool(problem_type)
     history.append(f"You: {human_answer}")
     code_run_output = ''
@@ -78,4 +79,4 @@ def ai_answer_code_with_tool(question, history, human_answer, problem_type, max_
     if code_run_output != 'All tests passed!\n':
         status = False # the AI answer is wrong
 
-    return {'answer': ans, 'history': history, 'status': status}
+    return {'answer': ans['code'], 'history': history, 'status': status}

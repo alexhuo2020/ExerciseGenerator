@@ -65,7 +65,9 @@ const GamePage: React.FC<GamePageProps> = ({ page }) => {
     }
     const fetchProblem = async (): Promise<void> => {
       if (!pageState.problem) {
+      
         setLoading(true);
+        console.log(gameState);
         try {
           const response = await fetch('http://localhost:5000/api/problem', {
             method: 'POST',
