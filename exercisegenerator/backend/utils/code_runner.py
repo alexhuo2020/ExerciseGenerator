@@ -23,6 +23,17 @@ def execute_generated_code(generated_code_file: str, language='python', is_unit_
             if language == 'python':
                 result = subprocess.run(['python3', generated_code_file], capture_output=True, text=True)
             
+            elif language == 'cpp':
+                execfile = ''.join(generated_code_file.split(".")[:-1])+ '.o'
+                subprocess.run(['g++',generated_code_file, '-o', execfile])
+                result = subprocess.run(execfile, capture_output=True, text=True)
+
+
+            elif language == 'c':
+                execfile = ''.join(generated_code_file.split(".")[:-1])+ '.o'
+                subprocess.run(['gcc',generated_code_file, '-o', execfile])
+                result = subprocess.run(execfile, capture_output=True, text=True)
+
             elif language == 'javascript':
                 result = subprocess.run(['node', generated_code_file], capture_output=True, text=True)
             
@@ -59,12 +70,24 @@ def execute_generated_code(generated_code_file: str, language='python', is_unit_
 
             else:
                 # Unsupported language
-                return {"error": f"Language {language} is not supported."}
+                raise NotImplementedError(f"Language {language} is not supported.")
         else:
             if language == 'python':
                 # Run Python unit tests with pytest
                 result = subprocess.run(['pytest', generated_code_file], capture_output=True, text=True)
             
+
+            elif language == 'cpp':
+                execfile = ''.join(generated_code_file.split(".")[:-1])+ '.o'
+                subprocess.run(['g++',generated_code_file, '-o', execfile])
+                result = subprocess.run(execfile, capture_output=True, text=True)
+
+
+            elif language == 'c':
+                execfile = ''.join(generated_code_file.split(".")[:-1])+ '.o'
+                subprocess.run(['gcc',generated_code_file, '-o', execfile])
+                result = subprocess.run(execfile, capture_output=True, text=True)
+
             elif language == 'javascript':
                 # Run JavaScript unit tests with Jest (or Mocha, Chai, etc.)
                 result = subprocess.run(['npx', 'jest', generated_code_file], capture_output=True, text=True)
@@ -111,7 +134,8 @@ def execute_generated_code(generated_code_file: str, language='python', is_unit_
 
             else:
                 # Unsupported language for unit tests
-                return {"error": f"Unit tests for {language} are not supported."}
+                raise NotImplementedError(f"Unit tests for {language} are not supported.")
+
         
         
         # Check if the code execution produced output or error
@@ -121,8 +145,9 @@ def execute_generated_code(generated_code_file: str, language='python', is_unit_
             return {"error": result.stderr}
     
     except Exception as e:
+        raise NotImplementedError("Error")
         # Return the error message in case of an exception
-        return {"error": str(e)}
+        # return {"error": "Not Implemented"}
 
 
 # def execute_generated_code(generated_code_file: str, language = 'python'):

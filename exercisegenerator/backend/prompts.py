@@ -78,7 +78,7 @@ class AnsPrompts():
         elif self.type == 'coding':
             self.prompt = PromptTemplate(
                 input_variables=["question", "history"],
-                template="Based on the history: {history}. Provide the correct code and an explanation for the following problem: {question} in three different blocks.\n code: ...\n unit test code: \n explanation:\n "
+                template="Based on the history: {history}. Provide the correct code, unit test code and an explanation for the following problem: {question} in three different blocks.\n code: ...\n unit test code: \n explanation:\n "
             )
         else:
             self.prompt = PromptTemplate(
