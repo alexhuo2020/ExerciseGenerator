@@ -45,7 +45,6 @@ def get_question_chains(problem_type):
     """
     llm = get_llm()
     question_prompt = QuesPrompts(problem_type).prompt
-    print(question_prompt)
     question_chain = LLMChain(llm=llm, prompt=question_prompt)
     return question_chain
 

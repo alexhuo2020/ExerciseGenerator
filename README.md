@@ -11,6 +11,8 @@ npm start
 
 To run the backend on localhost, run
 ```bash
+cd exercisegenerator
+mkdir cache
 cd ./backend
 touch .env
 ```
@@ -26,6 +28,7 @@ GEMINI_API_KEY=YOUR_API_KEY
 Just update the model and API key you want to use. To get a free api key, one can use the Llama Grok API key (
 https://console.groq.com/keys) or the Gemini API key (https://ai.google.dev/gemini-api/). Note that these APIs have limited usage in terms on tokens and model types. One can also obtains paid API via them and also openai, anthropic or other large language model API providers. Since we use LangChain, it is easy to modify the function `get_llm` in file `backend/llm_chains` to support all the models that LangChain supports.
 
+Donot forget to create the `cache` folder in the root directory, which is used to store the generated code and run unit test.
 
 then run
 ```bash
