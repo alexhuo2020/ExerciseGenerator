@@ -6,7 +6,7 @@ from flask_cors import CORS
 import numpy as np 
 import random
 
-from llm_agent import ai_answer, ai_question, ai_evaluation, ai_answer_code, ai_evaluation_code
+from llm_agent import ai_answer, ai_question, ai_evaluation, ai_answer_code, ai_evaluation_code, ai_tutorial
 
 
 app = Flask(__name__)
@@ -232,6 +232,32 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/api/tutorial', methods=['POST'])
+def tutorial():
+    try:
+        data = request.json
+        character_name = data['characterName']
+        expert_name = data['expertName']
+        game_name = data['gameName']
+        level = data['problemLevel']
+        types = data['problemType']
+        if level == 'Random':
+            levels =["Easy", "Intermediate", "Difficult", "Super Difficult", "Random"]
+            level = random.choice(levels) 
+        
+        if types == 'Random':
+            all_types = ["Multiple Choice", "Coding", "T/F", "Eassy",  "Written Response", "Random"]
+            types = random.choice(all_types)
+
+        # Generate question with AI
+        result = ai_tutorial(character_name, expert_name, game_name, types)
+            
+        print("succesful")
+        return jsonify({'tutorial':result['tutorial']
+        }), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+   
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

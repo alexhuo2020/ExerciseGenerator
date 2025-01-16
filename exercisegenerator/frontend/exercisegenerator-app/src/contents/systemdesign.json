@@ -1,0 +1,175 @@
+{
+    "course": "System Design",
+    "sections": [
+      {
+        "title": "Fundamentals of System Design",
+        "topics": [
+          "Introduction to System Design",
+          "Key Principles: Scalability, Reliability, Availability, Maintainability, and Performance",
+          "Client-Server Architecture Overview",
+          "CAP Theorem and its Implications",
+          "Load Balancing Basics"
+        ]
+      },
+      {
+        "title": "Designing for Scalability",
+        "topics": [
+          "Horizontal vs. Vertical Scaling",
+          "Sharding and Partitioning Techniques",
+          "Caching Strategies: Client-Side Caching, Server-Side Caching, CDN",
+          "Database Scaling: SQL vs. NoSQL",
+          "Master-Slave Replication",
+          "Leader-Follower Architecture"
+        ]
+      },
+      {
+        "title": "Networking and Protocols",
+        "topics": [
+          "HTTP/HTTPS and REST APIs",
+          "WebSockets and gRPC",
+          "DNS and CDN Functionality",
+          "Reverse Proxies and Forward Proxies",
+          "Firewalls and Security in Networking"
+        ]
+      },
+      {
+        "title": "Storage Systems",
+        "topics": [
+          "Relational Databases (RDBMS)",
+          "NoSQL Databases (Key-Value Stores, Document Stores, Graph Databases)",
+          "Data Replication and Consistency Models",
+          "Distributed File Systems (e.g., HDFS, S3)",
+          "Message Queues and Event Streaming (e.g., Kafka, RabbitMQ)"
+        ]
+      },
+      {
+        "title": "Load Balancing and Traffic Management",
+        "topics": [
+          "Round Robin, Least Connections, IP Hashing",
+          "Global Load Balancing and Geo-Distributed Systems",
+          "Sticky Sessions and Session Management",
+          "Autoscaling Mechanisms"
+        ]
+      },
+      {
+        "title": "Caching Systems",
+        "topics": [
+          "Distributed Caches (e.g., Redis, Memcached)",
+          "Cache Eviction Policies (LRU, LFU, FIFO)",
+          "Cache Invalidation Techniques",
+          "CDN Internals and Optimization"
+        ]
+      },
+      {
+        "title": "High Availability and Fault Tolerance",
+        "topics": [
+          "Redundancy and Failover Strategies",
+          "Distributed Consensus Algorithms (e.g., Paxos, Raft)",
+          "Heartbeat Mechanisms and Health Checks",
+          "Circuit Breaker Patterns"
+        ]
+      },
+      {
+        "title": "Consistency, Availability, and Partition Tolerance",
+        "topics": [
+          "Understanding the CAP Theorem",
+          "Strong Consistency vs. Eventual Consistency",
+          "BASE vs. ACID Properties",
+          "Quorum and Voting Mechanisms"
+        ]
+      },
+      {
+        "title": "Designing Real-World Systems",
+        "topics": [
+          "URL Shortener",
+          "Rate Limiter",
+          "Messaging Systems (e.g., WhatsApp, Slack)",
+          "Social Media Feed Design",
+          "Video Streaming Platform (e.g., YouTube, Netflix)",
+          "Search Engines (e.g., Google)",
+          "E-commerce Platforms (e.g., Amazon)"
+        ]
+      },
+      {
+        "title": "Logging, Monitoring, and Alerting",
+        "topics": [
+          "Centralized Logging Systems (e.g., ELK Stack)",
+          "Metrics Collection and Analysis (e.g., Prometheus, Grafana)",
+          "Distributed Tracing (e.g., Jaeger, OpenTelemetry)",
+          "Setting Up Alerts and Thresholds"
+        ]
+      },
+      {
+        "title": "Security and Compliance",
+        "topics": [
+          "Authentication and Authorization (OAuth, JWT)",
+          "Secure Data Storage and Encryption",
+          "Rate Limiting and DoS Protection",
+          "GDPR and Data Privacy Compliance"
+        ]
+      },
+      {
+        "title": "Microservices Architecture",
+        "topics": [
+          "Monolithic vs. Microservices Architecture",
+          "Service Discovery and Communication Patterns",
+          "API Gateway Design",
+          "Managing State in Microservices"
+        ]
+      },
+      {
+        "title": "Event-Driven Architecture",
+        "topics": [
+          "Event Sourcing and CQRS",
+          "Designing Event Pipelines",
+          "Pub/Sub Messaging Systems",
+          "Stream Processing Frameworks"
+        ]
+      },
+      {
+        "title": "DevOps and CI/CD",
+        "topics": [
+          "Continuous Integration and Continuous Deployment Pipelines",
+          "Infrastructure as Code (IaC)",
+          "Containerization with Docker",
+          "Orchestration with Kubernetes"
+        ]
+      },
+      {
+        "title": "Performance Optimization",
+        "topics": [
+          "Database Indexing and Query Optimization",
+          "CDN Optimization",
+          "Caching Strategies for High Performance",
+          "Bottleneck Analysis"
+        ]
+      },
+      {
+        "title": "Distributed Systems Design",
+        "topics": [
+          "Distributed Hash Tables (DHTs)",
+          "Gossip Protocols",
+          "Data Replication and Partitioning in Distributed Systems",
+          "Leader Election and Consensus Mechanisms"
+        ]
+      },
+      {
+        "title": "Observability in Distributed Systems",
+        "topics": [
+          "Understanding Distributed Logs",
+          "Trace and Span Architecture",
+          "Metrics, Logs, and Alerts in Distributed Systems"
+        ]
+      },
+      {
+        "title": "System Design Best Practices",
+        "topics": [
+          "Handling Trade-offs in Design Decisions",
+          "Antipatterns in System Design",
+          "Design Documentation and Communication",
+          "Mock Interviews and Real-World Examples"
+        ]
+      }
+    ]
+  }
+  

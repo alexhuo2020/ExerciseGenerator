@@ -9,8 +9,11 @@ import { GameProvider } from './components/GameContext'; // context for exercise
 
 import GamePage from './pages/GamePage'
 import { PageProvider } from './components/PageContext'; // context for page
-
-
+import DataStructureCoursePage from './pages/DataStructureCoursePage';
+import TutorialPage from './pages/TutorialPages';
+import PythonCoursePage from './pages/PythonCoursePage';
+import SystemDesignCoursePage from './pages/SystemDesignCoursePage';
+import CoursePage from './pages/CoursePage';
 const App: React.FC = () => {
   
 
@@ -24,6 +27,11 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<IntroPage />} />
           <Route path="/game/:pageNumber" element={<Page />} />
+          <Route path="/datastructurecoursepage" element={<DataStructureCoursePage />} />
+          <Route path="/pythoncoursepage" element={<PythonCoursePage />} />
+          <Route path="/systemdesigncoursepage" element={<SystemDesignCoursePage />} />
+          <Route path="/tutorial" element={<TutorialPage />} />
+          <Route path="/coursepage" element={<CoursePage />} />
 
           {/* <Route path="/Result" element={<Result />} /> */}
         </Routes>

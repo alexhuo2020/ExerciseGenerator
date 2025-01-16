@@ -1,9 +1,8 @@
-from llm_chains import get_llm, get_question_chains, get_answer_chains, get_evaluation_chains, get_answer_chain_with_tool
+from llm_chains import get_llm, get_question_chains, get_answer_chains, get_evaluation_chains, get_answer_chain_with_tool, get_tutorial_chains
 import re
 from utils import save_code_from_markdown_to_file, execute_generated_code, save_code, save_code_from_human_input
 
 def ai_question(character_name, expert_name, game_name, level, problem_type=''):
-    print('problemType', problem_type)
     question_chain = get_question_chains(problem_type)
     history = []
     question = question_chain.invoke({"character_name": character_name, "expert_name": expert_name, "game_name": game_name, "type": type, "level":level})['text']
@@ -80,3 +79,12 @@ def ai_answer_code_with_tool(question, history, human_answer='', problem_type='c
         status = False # the AI answer is wrong
 
     return {'answer': ans['code'], 'history': history, 'status': status}
+
+
+def ai_tutorial(character_name, expert_name, game_name, problemType):
+    tutorial_chain = get_tutorial_chains(problemType)
+    history = []
+    tutorial = tutorial_chain.invoke({"character_name": character_name, "expert_name": expert_name, "game_name": game_name})['text']
+    tutorial = tutorial.replace("\n\n","\n")
+    history.append(f"AI: {tutorial}")
+    return {'history': history, 'tutorial': tutorial} 

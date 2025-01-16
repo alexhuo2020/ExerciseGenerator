@@ -111,6 +111,11 @@ def get_answer_chain_with_tool(problem_type):
     tagging_chain = answer_prompt | tagging_model | JsonOutputFunctionsParser()
     return tagging_chain
 
+def get_tutorial_chains(problem_type):
+    llm = get_llm()
+    tutorial_prompt = TutPrompts(problem_type).prompt
+    tutorial_chain = LLMChain(llm=llm, prompt=tutorial_prompt)
+    return tutorial_chain
 
 if __name__ == '__main__':
     from llm_agent import ai_question, ai_answer_code

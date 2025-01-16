@@ -86,3 +86,12 @@ class AnsPrompts():
                 template="Based on the history: {history}. Provide the correct answer and an explanation for the following problem: {question}"
             )
 
+class TutPrompts():
+    def __init__(self, type = ''):
+        self.type = type
+            # Define the prompt for generating questions with history
+        self.prompt = PromptTemplate(
+            input_variables=["character_name", "expert_name", "game_name"],
+            template= """You are {expert_name} and I am {character_name}. Please provide a comprehensive tutorial about {game_name}.
+            """
+            )
