@@ -45,9 +45,10 @@ def save_code_from_human_input(human_answer, language):
     with open(folder + 'test' + ext, 'r') as f:
         # f.write('from ans import *')
         test_content = f.read()
-    with open('human_ans' + ext, 'w') as f:
+    with open(folder + 'human_ans' + ext, 'w') as f:
         f.write(human_answer)
         f.write(test_content)
+    return folder + 'human_ans' + ext
     
 
 def run_unit_test(language):
