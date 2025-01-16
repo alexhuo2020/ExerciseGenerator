@@ -10,18 +10,13 @@ def ai_question(character_name, expert_name, game_name, level, problem_type=''):
     history.append(f"AI: {question}")
     return {'history': history, 'question': question} 
 
-def ai_answer(question, history, problem_type=''):
+
+def ai_answer(question, history, human_answer='', problem_type=''):
     answer_chain = get_answer_chains(problem_type)
+    history.append(f"You: {human_answer}")
     ans = answer_chain.invoke({"question": question, "history": "\n".join(history)})['text']
     history.append(f"AI: {ans}")
     return {'answer': ans, 'history': history}
-
-# def ai_answer(question, history, human_answer, problem_type=''):
-#     answer_chain = get_answer_chains(problem_type)
-#     history.append(f"You: {human_answer}")
-#     ans = answer_chain.invoke({"question": question, "history": "\n".join(history)})['text']
-#     history.append(f"AI: {ans}")
-#     return {'answer': ans, 'history': history}
 
 def ai_evaluation(question, history, human_answer, problem_type=''):
     evaluation_chain = get_evaluation_chains(problem_type)

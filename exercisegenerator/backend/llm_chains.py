@@ -21,8 +21,6 @@ def get_llm():
     elif os.getenv('LLM_SOURCE') == 'gemini':
         from langchain_google_genai import ChatGoogleGenerativeAI
         llm = ChatGoogleGenerativeAI(model=os.getenv('LLM_NAME'))
-        s = llm.invoke('Who is Joe Biden')
-        print(s)
     else:
         raise NotImplementedError("LLM Not currently supported.")
     return llm
@@ -78,7 +76,7 @@ def get_answer_chains(problem_type):
     """
     llm = get_llm()
     answer_prompt = AnsPrompts(problem_type).prompt
-    answer_chain =LLMChain(llm=llm, prompt=answer_prompt)
+    answer_chain = LLMChain(llm=llm, prompt=answer_prompt)
     return answer_chain
 
 

@@ -64,7 +64,7 @@ const IntroPage: React.FC<IntroPageProps> = () => {
 
   const handleStartGame = async () => {
     if ( userName && userId && characterName && expertName && gameName) {
-    //   onStartGame();
+    onStartGame();
     setGameState({userName, userId, characterName, expertName, gameName, problemType, problemLevel});
 
       navigate("/game/1") // Move to the first problem
